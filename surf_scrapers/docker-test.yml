@@ -1,4 +1,9 @@
 version: '2'
+
+volumes:
+    surf-test:
+      driver: local 
+
 services:
 
   scrapy-surf:
@@ -10,7 +15,7 @@ services:
       - .:/app
     build:
       context: .
-      dockerfile: DockerFile-test
+      dockerfile: docker/DockerFile-test
     links:
       - mongodb
 
@@ -19,6 +24,8 @@ services:
     image: mongo:latest
     restart: on-failure
     container_name: mongodb
+    volumes:
+      - surf-test:/data/db
     expose:
       - 27017
     ports:

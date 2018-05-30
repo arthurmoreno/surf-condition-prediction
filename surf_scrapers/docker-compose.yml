@@ -21,7 +21,7 @@ services:
   worker:
     build:
       context: .
-      dockerfile: DockerFile
+      dockerfile: docker/DockerFile
     volumes:
       - .:/app
     links:
