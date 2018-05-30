@@ -1,3 +1,5 @@
+from celery.schedules import crontab
+
 ## Broker settings.
 broker_url = 'amqp://guest:guest@rabbitmq:5672/guest'
 
@@ -8,7 +10,7 @@ timezone = 'America/Recife'
 
 beat_schedule = {
     'add-every-30-seconds': {
-        'task': 'hello',
-        'schedule': 10.0
+        'task': 'waves-crawler',
+        'schedule': crontab(minute='*/15')
     },
 }

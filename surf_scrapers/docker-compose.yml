@@ -1,4 +1,9 @@
 version: '2'
+
+volumes:
+    surf-data:
+      driver: local 
+
 services:
 
   rabbitmq:
@@ -26,8 +31,11 @@ services:
 
   mongodb:
     image: mongo:latest
+    hostname: mongodb
     restart: on-failure
     container_name: mongodb
+    volumes:
+      - surf-data:/data/db
     expose:
       - 27017
     ports:

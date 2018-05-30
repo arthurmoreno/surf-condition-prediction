@@ -1,0 +1,25 @@
+version: '2'
+services:
+
+  scrapy-surf:
+    user: root
+    restart: 'no'
+    container_name: scrapy-surf
+    command: /bin/bash
+    volumes:
+      - .:/app
+    build:
+      context: .
+      dockerfile: DockerFile-test
+    links:
+      - mongodb
+
+  mongodb:
+    hostname: mongodb
+    image: mongo:latest
+    restart: on-failure
+    container_name: mongodb
+    expose:
+      - 27017
+    ports:
+      - 27017:27017
