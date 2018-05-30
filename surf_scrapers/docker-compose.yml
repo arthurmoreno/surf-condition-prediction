@@ -1,0 +1,34 @@
+version: '2'
+services:
+
+  rabbitmq:
+    hostname: rabbitmq
+    image: rabbitmq:3-management
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+      - RABBITMQ_DEFAULT_VHOST=guest
+    expose:
+      - 5672
+    ports:
+      - 5672:5672
+
+  worker:
+    build:
+      context: .
+      dockerfile: DockerFile
+    volumes:
+      - .:/app
+    links:
+      - rabbitmq
+    depends_on:
+      - rabbitmq
+
+  mongodb:
+    image: mongo:latest
+    restart: on-failure
+    container_name: mongodb
+    expose:
+      - 27017
+    ports:
+      - 27017:27017
