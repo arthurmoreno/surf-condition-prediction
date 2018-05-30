@@ -14,3 +14,4 @@ class CondicaoLoader(ItemLoader):
     estado_out = TakeFirst()
     pico_out = TakeFirst()
     condicao_out = TakeFirst()
+    dia_out = TakeFirst()

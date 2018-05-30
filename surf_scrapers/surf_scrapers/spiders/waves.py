@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from scrapy.loader import ItemLoader
 from scrapy import Spider, Request
 
@@ -17,12 +19,21 @@ class WavesSpider(Spider):
     name = "waves"
 
     def start_requests(self):
-        urls = [
-            'http://www.waves.com.br/surf/ondas/condicao/pernambuco/',
+        estados = [
+            'bahia',
+            'sergipe',
+            'alagoas',
+            'pernambuco',
+            'paraiba',
+            'rio-grande-do-norte'
         ]
+        urls = {
+            estado: 'http://www.waves.com.br/surf/ondas/condicao/{}/'.format(estado)
+            for estado in estados
+        }
 
-        for url in urls:
-            meta = {'estado': 'pernambuco'}
+        for estado, url in urls.items():
+            meta = {'estado': estado}
             yield Request(
                 url=url,
                 meta=meta,
@@ -49,4 +60,5 @@ class WavesSpider(Spider):
         loader.add_xpath('condicao', XPATH_CONDICAO)
         loader.add_value('estado', meta['estado'])
         loader.add_value('pico', meta['pico'])
+        loader.add_value('dia', datetime.now().date().strftime("%Y-%m-%d"))
         return loader.load_item()

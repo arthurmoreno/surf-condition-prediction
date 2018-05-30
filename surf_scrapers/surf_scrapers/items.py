@@ -5,3 +5,4 @@ class CondicaoItem(Item):
     estado = Field()
     pico = Field()
     condicao = Field()
+    dia = Field()
